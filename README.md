@@ -1,6 +1,4 @@
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/airbnb/javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
-# Airbnb JavaScript Style Guide() {
+# Despark JavaScript Style Guide() {
 
 *A mostly reasonable approach to JavaScript*
 
@@ -366,16 +364,13 @@
     var superPower = new SuperPower();
     ```
 
-  - Use one `var` declaration per variable.
-    It's easier to add new variable declarations this way, and you never have
-    to worry about swapping out a `;` for a `,` or introducing punctuation-only
-    diffs.
+  - You can chain the declaration of multiple variables with a single use of `var` declaration and all variables after it separated by `,` and a new line, tabbulated one level.
 
     ```javascript
     // bad
-    var items = getItems(),
-        goSportsTeam = true,
-        dragonball = 'z';
+    var items = getItems();
+    var goSportsTeam = true;
+    var dragonball = 'z';
 
     // bad
     // (compare to above, and try to spot the mistake)
@@ -384,9 +379,9 @@
         dragonball = 'z';
 
     // good
-    var items = getItems();
-    var goSportsTeam = true;
-    var dragonball = 'z';
+    var items = getItems(),
+        goSportsTeam = true,
+        dragonball = 'z';
     ```
 
   - Declare unassigned variables last. This is helpful when later on you might need to assign a variable depending on one of the previous assigned variables.
@@ -412,17 +407,17 @@
     var i;
     ```
 
-  - Assign variables at the top of their scope. This helps avoid issues with variable declaration and assignment hoisting related issues.
+  - Assign variables immediatelty before their first usage rather than in the beggining of their scopeindentation. That way you won't need to scroll up to the declarations at some point.
 
     ```javascript
     // bad
     function() {
+      var name = getName();
+
       test();
       console.log('doing stuff..');
 
       //..other stuff..
-
-      var name = getName();
 
       if (name === 'test') {
         return false;
@@ -433,12 +428,12 @@
 
     // good
     function() {
-      var name = getName();
-
       test();
       console.log('doing stuff..');
 
       //..other stuff..
+
+      var name = getName();
 
       if (name === 'test') {
         return false;
@@ -446,6 +441,7 @@
 
       return name;
     }
+    
 
     // bad
     function() {
@@ -758,12 +754,12 @@
 
 ## Whitespace
 
-  - Use soft tabs set to 2 spaces.
+  - Use soft tabs set to 4 spaces.
 
     ```javascript
     // bad
     function() {
-    ∙∙∙∙var name;
+    ∙∙var name;
     }
 
     // bad
@@ -773,7 +769,7 @@
 
     // good
     function() {
-    ∙∙var name;
+    ∙∙∙∙var name;
     }
     ```
 
@@ -1188,14 +1184,14 @@
     this._firstName = 'Panda';
     ```
 
-  - When saving a reference to `this` use `_this`.
+  - When saving a reference to `this` use `self`.
 
     ```javascript
     // bad
     function() {
-      var self = this;
+      var _this = this;
       return function() {
-        console.log(self);
+        console.log(_this);
       };
     }
 
@@ -1209,9 +1205,9 @@
 
     // good
     function() {
-      var _this = this;
+      var self = this;
       return function() {
-        console.log(_this);
+        console.log(self);
       };
     }
     ```
